@@ -1,0 +1,14 @@
+<h1>Dashboard Admin</h1>
+
+<p>Total de Tasks: <%= @tasks_count %></p>
+<p>Total de Usuários: <%= @users_count %></p>
+
+<h2>Tasks Recentes</h2>
+<% @recent_tasks.each do |task| %>
+  <p>
+    <strong><%= task.name %></strong>
+    — <%= task.user&.email || "Sem usuário" %>
+  </p>
+<% end %>
+
+

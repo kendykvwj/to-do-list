@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  belongs_to :User
+  belongs_to :user, optional: false
 
   validates :name, presence: true
   validates :description, presence: true, length: { minimum: 10 }

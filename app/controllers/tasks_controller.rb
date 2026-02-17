@@ -5,7 +5,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = current_user.tasks.order(created_at: :desc)
+    @tasks = policy_scope(Task)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -24,6 +24,7 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = current_user.tasks.build(task_params)
+    authorize @task
 
       if @task.save
         redirect_to @task, notice: "Task criada com sucesso."
@@ -51,7 +52,8 @@ class TasksController < ApplicationController
   private
     # Se nao pertence ao usuario da erro
     def set_task
-      @task = current_user.tasks.find_by(id: params[:id])
+      @task = Task.find(params[:id])
+      authorize @task
       redirect_to tasks_path, alert: "Task nao encontrada." unless @task
     end
 

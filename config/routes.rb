@@ -7,4 +7,8 @@ Rails.application.routes.draw do
   end
 
   root to: redirect("/users/sign_in")
+
+  namespace :admin do
+    get "dashboard", to: "dashboard#index"
+  end
 end

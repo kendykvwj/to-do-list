@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
+  after_initialize :set_default_role, if: :new_record?
 
   enum role: { user: 0, admin: 1 }
   # Include default devise modules. Others available are:
@@ -24,5 +25,9 @@ class User < ApplicationRecord
 
   def normalize_email
     self.email = email.downcase.strip if email.present?
+  end
+
+  def set_default_role
+    self.role ||= :user
   end
 end
